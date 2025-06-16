@@ -7,11 +7,11 @@ const port=3000;
 
 const createAgentRouter=require('./routes/createAgent');
 
-app.use(express.static(path.join(__dirname,'..','public')));
+app.use(express.static(path.join(__dirname,'..')));
 app.use('/api',createAgentRouter);
 
 app.get("/",(req,res)=>{
-    res.render("public/index.html");
+    res.sendFile(path.join(__dirname, '..', 'index.html'));
 })
 
 app.listen(port,()=>{
