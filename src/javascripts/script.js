@@ -1,5 +1,7 @@
 import { BlandWebClient } from 'bland-client-js-sdk';
 
+let blandClient=null;
+
 document.getElementById("start-btn").addEventListener("click", async () => {
   try {
     const res = await fetch('/api/createAgent', { method: 'POST' });
@@ -36,13 +38,15 @@ document.getElementById("start-btn").addEventListener("click", async () => {
 });
 
 
-
 async function startWebCall(agentId,sessionToken){
     try{
-        const blandClient = new BlandWebClient(agentId, sessionToken);
+        blandClient = new BlandWebClient(agentId, sessionToken);
         await blandClient.initConversation({ sampleRate: 44100 });  
 
         console.log("Webcall started successfully!");
+        document.getElementById('transcript-box').innerHTML += `
+        <p style="color:green;"><strong>✅ Web call started successfully.</strong></p>
+        `;
     } catch (error) {
         console.error('❌ Failed to start web call:', error);
         document.getElementById('transcript-box').innerHTML += `
@@ -51,3 +55,5 @@ async function startWebCall(agentId,sessionToken){
         `;
     }
 }
+
+
