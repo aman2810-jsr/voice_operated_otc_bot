@@ -10,10 +10,12 @@ app.use(express.json());
 
 const createAgentRouter=require('./routes/createAgent');
 const deleteAgentRouter=require('./routes/deleteAgent');
+const blandWebhookRouter=require('./routes/blandWebhook');
 
 
 app.use('/api',createAgentRouter);
 app.use('/api',deleteAgentRouter);
+app.use('/api',blandWebhookRouter);
 app.use(express.static(path.join(__dirname,'..')));
 
 app.get("/",(req,res)=>{
