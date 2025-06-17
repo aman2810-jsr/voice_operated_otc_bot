@@ -1,6 +1,7 @@
 import { BlandWebClient } from 'bland-client-js-sdk';
 
 let blandClient=null;
+let agentId = null;
 
 document.getElementById("start-btn").addEventListener("click", async () => {
   try {
@@ -13,6 +14,7 @@ document.getElementById("start-btn").addEventListener("click", async () => {
             <p> Webcall is starting..</p>
         `;
         startWebCall(data.agentId, data.sessionToken);
+        agentId = data.agentId; // Store the agentId for later use
     } 
 
     else if(!data.agentId) {
@@ -56,4 +58,42 @@ async function startWebCall(agentId,sessionToken){
     }
 }
 
+document.getElementById('stop-btn').addEventListener('click', async () => {
+  if (blandClient && agentId) {
+
+    // Stop the local conversation/mic/audio
+    await blandClient.stopConversation();
+
+    try {
+      const res = await fetch('/api/deleteAgent', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ agentId })  // Pass agentId to backend
+      });
+
+      const data = await res.json();
+      console.log('Agent deleted:', data);
+
+      document.getElementById('transcript-box').innerHTML += `
+        <p style="color:green;"><strong>✅ Agent deleted successfully.</strong></p>
+      `;
+
+        blandClient = null;
+        agentId = null;
+
+    } catch (error) {
+      console.error('Error deleting agent:', error);
+      document.getElementById('transcript-box').innerHTML += `
+        <p style="color:red;"><strong>❌ Failed to delete agent.</strong></p>
+        <pre>${error.message}</pre>
+      `;
+    }
+  } else {
+    document.getElementById('transcript-box').innerHTML += `
+      <p style="color:orange;"><strong>⚠️ No active web call to stop.</strong></p>
+    `;
+  }
+});
 

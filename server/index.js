@@ -5,10 +5,16 @@ const dotenv=require('dotenv');
 dotenv.config();
 const port=3000;
 
-const createAgentRouter=require('./routes/createAgent');
 
-app.use(express.static(path.join(__dirname,'..')));
+app.use(express.json());
+
+const createAgentRouter=require('./routes/createAgent');
+const deleteAgentRouter=require('./routes/deleteAgent');
+
+
 app.use('/api',createAgentRouter);
+app.use('/api',deleteAgentRouter);
+app.use(express.static(path.join(__dirname,'..')));
 
 app.get("/",(req,res)=>{
     res.sendFile(path.join(__dirname, '..', 'index.html'));
