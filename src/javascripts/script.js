@@ -43,8 +43,8 @@ document.getElementById("start-btn").addEventListener("click", async () => {
 async function startWebCall(agentId,sessionToken){
     try{
         blandClient = new BlandWebClient(agentId, sessionToken);
-        await blandClient.initConversation({ sampleRate: 44100 });  
-
+        await blandClient.initConversation({ sampleRate: 44100 }); 
+        
         console.log("Webcall started successfully!");
         document.getElementById('transcript-box').innerHTML += `
         <p style="color:green;"><strong>✅ Web call started successfully.</strong></p>

@@ -6,7 +6,7 @@ router.post('/createAgent',async (req,res)=>{
     let sessionToken;
 
     try{
-        const ngrokWebhookURL = 'https://b0ab-2401-4900-8834-f859-f06f-6b13-6aca-f059.ngrok-free.app'; //copy from terminal after running npx ngrok http 3000 and copying from after opening the web interface link
+        const ngrokWebhookURL = 'https://48dc-2401-4900-8835-75bb-b81e-1192-93c6-7906.ngrok-free.app'; //copy from terminal after running npx ngrok http 3000 and copying from after opening the web interface link
 
         const response=await fetch('https://api.bland.ai/v1/agents',{
             method:'POST',
@@ -20,10 +20,10 @@ router.post('/createAgent',async (req,res)=>{
                 webhook: `${ngrokWebhookURL}/api/blandWebhook`, // webhook URL for handling responses
                 analysis_schema: {},
                 metadata: {},
-                pathway_id: null,
+                pathway_id: "26369cf6-205d-40a3-842c-cfb290bd75fc",
                 language: "en",
                 model: "gpt-4o",
-                first_sentence: "Welcome to the OTC desk. Which exchange would you like to use?",
+                first_sentence: "Welcome to the OTC desk. Which exchange would you like to use?.We have the following exchanges available: OKX, Binance, Bybit, and Deribit.",
                 tools: [],
                 dynamic_data: {},
                 interruption_threshold: 100,
