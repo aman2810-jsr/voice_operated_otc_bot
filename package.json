@@ -13,6 +13,7 @@
   "license": "ISC",
   "dependencies": {
     "@ngrok/ngrok": "^1.5.1",
+    "@tailwindcss/cli": "^4.1.11",
     "axios": "^1.10.0",
     "bland-client-js-sdk": "^0.1.9",
     "dotenv": "^16.5.0",
@@ -22,7 +23,10 @@
     "vite": "^6.3.5"
   },
   "devDependencies": {
-    "nodemon": "^3.1.10"
+    "autoprefixer": "^10.4.21",
+    "nodemon": "^3.1.10",
+    "postcss": "^8.5.6",
+    "tailwindcss": "^3.4.17"
   },
   "description": ""
 }

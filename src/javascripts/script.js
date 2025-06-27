@@ -9,33 +9,22 @@ document.getElementById("start-btn").addEventListener("click", async () => {
     const data = await res.json();
 
     if (res.ok && data.agentId && data.sessionToken) {
-        document.getElementById('transcript-box').innerHTML = `
-            <p style="color:green;"><strong>✅ Agent created and session authorized!</strong></p>
-            <p> Webcall is starting..</p>
-        `;
+        console.log('Agent created');
+        console.log('Session started');
         startWebCall(data.agentId, data.sessionToken);
         agentId = data.agentId; // Store the agentId for later use
     } 
 
     else if(!data.agentId) {
-        document.getElementById('transcript-box').innerHTML = `
-            <p style="color:red;"><strong>❌ Failed to create agent.</strong></p>
-            <pre>${JSON.stringify(data, null, 2)}</pre>
-        `;
+        alert("Failed to create agent. Please check the server logs for more details.");
     } 
 
     else {
-            document.getElementById('transcript-box').innerHTML = `
-            <p style="color:red;"><strong>❌ Failed to create session.</strong></p>
-            <pre>${JSON.stringify(data, null, 2)}</pre>
-        `;
+        alert("Failed to create session. Please check the server logs for more details.");
     }
 }  catch (error) {
         console.error(error);
-        document.getElementById('transcript-box').innerHTML = `
-        <p style="color:red;"><strong>❌ Failed to connect to server.</strong></p>
-        <pre>${error.message}</pre>
-        `;
+        alert("Failed to connect to server. Please check the server logs for more details.");
     }
 });
 
@@ -46,15 +35,9 @@ async function startWebCall(agentId,sessionToken){
         await blandClient.initConversation({ sampleRate: 44100 }); 
         
         console.log("Webcall started successfully!");
-        document.getElementById('transcript-box').innerHTML += `
-        <p style="color:green;"><strong>✅ Web call started successfully.</strong></p>
-        `;
+
     } catch (error) {
         console.error('❌ Failed to start web call:', error);
-        document.getElementById('transcript-box').innerHTML += `
-        <p style="color:red;"><strong>❌ Web call failed to start</strong></p>
-        <pre>${error.message}</pre>
-        `;
     }
 }
 
@@ -85,16 +68,22 @@ document.getElementById('stop-btn').addEventListener('click', async () => {
 
     } catch (error) {
       console.error('Error deleting agent:', error);
-      document.getElementById('transcript-box').innerHTML += `
-        <p style="color:red;"><strong>❌ Failed to delete agent.</strong></p>
-        <pre>${error.message}</pre>
-      `;
     }
   } else {
-    document.getElementById('transcript-box').innerHTML += `
-      <p style="color:orange;"><strong>⚠️ No active web call to stop.</strong></p>
-    `;
+    alert("No active web call to stop.");
   }
 });
 
 
+// Add pulse animation to mic icon on start/stop button clicks
+const micImg = document.getElementById("mic-img");
+const startBtn = document.getElementById("start-btn");
+const stopBtn = document.getElementById("stop-btn");
+
+startBtn.addEventListener("click", () => {
+  micImg.classList.add("animate-pulse-mic");
+});
+
+stopBtn.addEventListener("click", () => {
+  micImg.classList.remove("animate-pulse-mic");
+});
